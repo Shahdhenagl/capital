@@ -39,6 +39,19 @@
       fieldNotes: "ملاحظات إضافية",
       fieldNotesPh: "نوع المصعد، عمره، العطل، أو مواصفات المشروع",
       submitLead: "إرسال الطلب وفتح واتساب",
+      stepOne: "الخطوة 1 من 5",
+      stepTwo: "الخطوة 2 من 5",
+      stepThree: "الخطوة 3 من 5",
+      stepFour: "الخطوة 4 من 5",
+      stepFive: "الخطوة 5 من 5",
+      stepContactTitle: "نبدأ ببيانات التواصل",
+      stepPlaceTitle: "اختار المدينة ونوع المبنى",
+      stepScopeTitle: "حدد حجم الطلب وأولويته",
+      stepServicesTitle: "اختار الخدمات المطلوبة",
+      stepNotesTitle: "آخر تفاصيل قبل إرسال الطلب",
+      nextStep: "التالي",
+      prevStep: "السابق",
+      chooseRequired: "اختار إجابة للمرحلة الحالية قبل المتابعة.",
       faqKicker: "أسئلة قبل الصعود",
       faqTitle: "إجابات مختصرة تساعد العميل يقرر بثقة",
       footerText: "عاصمة الكون للمصاعد، وكلاء FUJI YEM. حلول تركيب وصيانة وتحديث للمصاعد في المملكة العربية السعودية.",
@@ -92,6 +105,19 @@
       fieldNotes: "Additional notes",
       fieldNotesPh: "Elevator type, age, fault, or project specs",
       submitLead: "Send request and open WhatsApp",
+      stepOne: "Step 1 of 5",
+      stepTwo: "Step 2 of 5",
+      stepThree: "Step 3 of 5",
+      stepFour: "Step 4 of 5",
+      stepFive: "Step 5 of 5",
+      stepContactTitle: "Start with contact details",
+      stepPlaceTitle: "Choose the city and building type",
+      stepScopeTitle: "Set the request size and priority",
+      stepServicesTitle: "Choose the required services",
+      stepNotesTitle: "Final details before sending",
+      nextStep: "Next",
+      prevStep: "Previous",
+      chooseRequired: "Choose an answer in this step before continuing.",
       faqKicker: "Before The Ride",
       faqTitle: "Short answers that help clients decide with confidence",
       footerText: "Capital of Universe Elevators, FUJI YEM agents. Installation, maintenance, and modernization solutions across Saudi Arabia.",
@@ -189,17 +215,23 @@
     });
     const toggle = document.getElementById("langToggle");
     if (toggle) toggle.textContent = currentLang === "ar" ? "EN" : "AR";
-    renderSelectOptions();
   }
 
-  function renderSelectOptions() {
-    document.querySelectorAll("[data-options]").forEach(select => {
-      select.innerHTML = t(select.dataset.options).map(value => `<option>${escapeHtml(value)}</option>`).join("");
+  function renderChoiceOptions() {
+    document.querySelectorAll("[data-choice-group]").forEach(group => {
+      const name = group.dataset.choiceGroup;
+      group.innerHTML = t(name).map((value, index) => `
+        <label class="choice-card">
+          <input type="radio" name="${escapeHtml(name)}" value="${escapeHtml(value)}" ${index === 0 ? "checked" : ""} required>
+          <span>${escapeHtml(value)}</span>
+        </label>
+      `).join("");
     });
   }
 
   function renderPublic() {
     applyLanguage();
+    renderChoiceOptions();
     const data = getData();
     const { settings } = data;
     const wa = "https://wa.me/" + normalizePhone(settings.whatsapp);
@@ -229,7 +261,12 @@
     if (choices) {
       choices.innerHTML = data.services.map((service, i) => {
         const title = localField(service, "title", "titleEn");
-        return `<label><input type="checkbox" name="services" value="${escapeHtml(title)}" ${i === 0 ? "checked" : ""}>${escapeHtml(title)}</label>`;
+        return `
+          <label class="choice-card service-choice">
+            <input type="checkbox" name="services" value="${escapeHtml(title)}" ${i === 0 ? "checked" : ""}>
+            <span>${escapeHtml(title)}</span>
+          </label>
+        `;
       }).join("");
     }
 
@@ -278,6 +315,12 @@
 
   async function submitLead(event) {
     event.preventDefault();
+    const current = Number(event.currentTarget.dataset.currentStep || 0);
+    const last = event.currentTarget.querySelectorAll(".wizard-step").length - 1;
+    if (current < last) {
+      if (validateWizardStep(current)) showWizardStep(current + 1);
+      return;
+    }
     const data = getData();
     const form = event.currentTarget;
     const fd = new FormData(form);
@@ -315,7 +358,8 @@
     if (status) status.textContent = t("leadStatus");
     window.open(`https://wa.me/${normalizePhone(data.settings.whatsapp)}?text=${encodeURIComponent(message)}`, "_blank");
     form.reset();
-    renderSelectOptions();
+    renderChoiceOptions();
+    showWizardStep(0);
   }
 
   async function sendToSupabase(lead, settings) {
@@ -359,6 +403,62 @@
     });
   }
 
+  function showWizardStep(index) {
+    const form = document.getElementById("leadForm");
+    if (!form) return;
+    const steps = Array.from(form.querySelectorAll(".wizard-step"));
+    const progress = Array.from(form.querySelectorAll(".wizard-progress span"));
+    const prev = document.getElementById("prevStep");
+    const next = document.getElementById("nextStep");
+    const clamped = Math.max(0, Math.min(index, steps.length - 1));
+    form.dataset.currentStep = String(clamped);
+    steps.forEach((step, stepIndex) => step.classList.toggle("active", stepIndex === clamped));
+    progress.forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex <= clamped));
+    if (prev) prev.style.visibility = clamped === 0 ? "hidden" : "visible";
+    if (next) next.style.display = clamped === steps.length - 1 ? "none" : "inline-flex";
+  }
+
+  function validateWizardStep(index) {
+    const form = document.getElementById("leadForm");
+    const step = form.querySelector(`.wizard-step[data-step="${index}"]`);
+    if (!step) return true;
+    const requiredFields = Array.from(step.querySelectorAll("input[required], textarea[required]"));
+    for (const field of requiredFields) {
+      if (!field.reportValidity()) return false;
+    }
+    if (step.querySelector("[data-choice-group='city']") && !form.querySelector("input[name='city']:checked")) return false;
+    if (step.querySelector("[data-choice-group='building']") && !form.querySelector("input[name='building']:checked")) return false;
+    if (step.querySelector("[data-choice-group='urgency']") && !form.querySelector("input[name='urgency']:checked")) return false;
+    if (step.querySelector("#serviceChoices") && !form.querySelector("input[name='services']:checked")) {
+      const status = document.getElementById("formStatus");
+      if (status) status.textContent = t("chooseRequired");
+      return false;
+    }
+    return true;
+  }
+
+  function bindWizard() {
+    const form = document.getElementById("leadForm");
+    if (!form) return;
+    showWizardStep(0);
+    document.getElementById("nextStep").addEventListener("click", () => {
+      const current = Number(form.dataset.currentStep || 0);
+      const status = document.getElementById("formStatus");
+      if (status) status.textContent = "";
+      if (!validateWizardStep(current)) {
+        if (status && !status.textContent) status.textContent = t("chooseRequired");
+        return;
+      }
+      showWizardStep(current + 1);
+    });
+    document.getElementById("prevStep").addEventListener("click", () => {
+      const current = Number(form.dataset.currentStep || 0);
+      const status = document.getElementById("formStatus");
+      if (status) status.textContent = "";
+      showWizardStep(current - 1);
+    });
+  }
+
   function escapeHtml(value) {
     return String(value || "").replace(/[&<>"']/g, char => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
@@ -368,8 +468,10 @@
   window.CapitalUniverse = { defaults, getData, saveData, renderPublic, escapeHtml };
   document.addEventListener("DOMContentLoaded", () => {
     renderPublic();
+    renderChoiceOptions();
     bindScrollElevator();
     bindTilt();
+    bindWizard();
     const form = document.getElementById("leadForm");
     if (form) form.addEventListener("submit", submitLead);
     const langToggle = document.getElementById("langToggle");
