@@ -917,17 +917,20 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .menu-toggle { display: inline-flex; }
   .header-tools {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 52px;
-    gap: 8px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 42px;
   }
   .header-cta {
-    width: auto;
+    width: min(148px, calc(100% - 116px));
     min-height: 42px;
     padding: 10px 14px;
     border-radius: 12px;
   }
   .lang-toggle {
+    position: absolute;
+    inset-inline-end: 0;
     width: 52px;
     min-height: 42px;
     border-radius: 12px;
