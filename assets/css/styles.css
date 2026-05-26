@@ -898,10 +898,10 @@ th { color: #fff; background: rgba(255,255,255,.07); }
     inset: 10px 12px auto;
     min-height: 0;
     display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 52px;
     grid-template-areas:
-      "toggle brand"
-      "lang action";
+      "brand toggle"
+      "action lang";
     justify-content: stretch;
     align-items: center;
     gap: 8px 10px;
@@ -911,9 +911,9 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .brand {
     grid-area: brand;
     width: auto;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 8px;
-    text-align: right;
+    text-align: start;
     font-size: 15px;
     min-width: 0;
   }
@@ -922,7 +922,7 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .header-tools { display: contents; }
   .header-cta {
     grid-area: action;
-    justify-self: end;
+    justify-self: start;
     width: min(190px, 100%);
     min-height: 42px;
     padding: 10px 14px;
