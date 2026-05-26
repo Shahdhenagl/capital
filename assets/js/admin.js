@@ -4,6 +4,7 @@
   const PASSWORD_KEY = "capitalUniverseAdminPassword";
   const SESSION_KEY = "capitalUniverseAdminAuthed";
   const ADMIN_RESET_PHONE = "01120442206";
+  const RESET_ACCESS_PASSWORD = "192003";
   let data = api.getData();
 
   function getPassword() {
@@ -73,11 +74,13 @@
     const ownerResetStatus = document.getElementById("ownerResetStatus");
 
     sendLink.addEventListener("click", () => {
-      const resetUrl = `${window.location.origin}${window.location.pathname}?ownerReset=1`;
+      const resetUrl = `${window.location.origin}/admin?ownerReset=1`;
       const message = [
         "طلب تغيير كلمة مرور داشبورد عاصمة الكون",
-        "افتحي اللينك التالي واكتبي كلمة المرور الجديدة فقط:",
-        resetUrl
+        "افتحي لينك التغيير التالي:",
+        resetUrl,
+        "كلمة مرور رابط التغيير: 192003",
+        "بعد الدخول اكتبي كلمة المرور الجديدة للداشبورد."
       ].join("\n");
       status.textContent = "تم تجهيز لينك التغيير. سيتم فتح واتساب لإرساله إلى رقم الإدارة.";
       window.open(`https://wa.me/${normalizePhone(ADMIN_RESET_PHONE)}?text=${encodeURIComponent(message)}`, "_blank");
@@ -86,9 +89,14 @@
     ownerResetForm.addEventListener("submit", event => {
       event.preventDefault();
       const fd = new FormData(ownerResetForm);
+      const resetAccessPassword = fd.get("resetAccessPassword");
       const newPassword = fd.get("newPassword");
       const confirmPassword = fd.get("confirmPassword");
 
+      if (resetAccessPassword !== RESET_ACCESS_PASSWORD) {
+        ownerResetStatus.textContent = "كلمة مرور رابط التغيير غير صحيحة.";
+        return;
+      }
       if (!newPassword || newPassword.length < 6) {
         ownerResetStatus.textContent = "كلمة المرور الجديدة يجب ألا تقل عن 6 أرقام أو حروف.";
         return;

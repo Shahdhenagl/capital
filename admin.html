@@ -28,6 +28,9 @@
       <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
       <span class="eyebrow">تغيير كلمة المرور</span>
       <h1>إعداد كلمة مرور جديدة</h1>
+      <label>كلمة مرور رابط التغيير
+        <input name="resetAccessPassword" type="password" inputmode="numeric" autocomplete="off" required placeholder="اكتب كلمة مرور رابط التغيير">
+      </label>
       <label>كلمة المرور الجديدة
         <input name="newPassword" type="password" autocomplete="new-password" required placeholder="اكتب كلمة المرور الجديدة">
       </label>
@@ -135,7 +138,7 @@
       <section class="dashboard-module" id="securityModule">
         <form class="dash-panel module-panel password-panel" id="passwordForm">
           <div class="module-title"><span>05</span><div><h3>الأمان</h3><p>إرسال لينك تغيير كلمة المرور لمالك الموقع.</p></div></div>
-          <p>اضغط الزر لإرسال لينك تغيير كلمة المرور إلى رقم الإدارة على واتساب. مالك الموقع فقط يفتح اللينك ويكتب كلمة المرور الجديدة.</p>
+          <p>اضغط الزر لإرسال لينك تغيير كلمة المرور إلى رقم الإدارة على واتساب. اللينك لا يغيّر كلمة المرور إلا بعد إدخال كلمة مرور الحماية 192003.</p>
           <button class="primary wide" id="sendPasswordResetLink" type="button">إرسال لينك التغيير على واتساب</button>
           <p class="form-status" id="passwordStatus" role="status"></p>
         </form>
