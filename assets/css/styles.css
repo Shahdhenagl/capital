@@ -901,7 +901,8 @@ th { color: #fff; background: rgba(255,255,255,.07); }
     grid-template-columns: 52px minmax(0, 1fr);
     grid-template-areas:
       "brand toggle"
-      "action lang";
+      "action action"
+      "lang lang";
     justify-content: stretch;
     align-items: center;
     gap: 8px 10px;
@@ -922,11 +923,12 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .header-tools { display: contents; }
   .header-cta {
     grid-area: action;
-    justify-self: start;
-    width: min(160px, 100%);
+    justify-self: end;
+    width: min(190px, 100%);
     min-height: 42px;
     padding: 10px 14px;
     border-radius: 12px;
+    white-space: nowrap;
   }
   .lang-toggle {
     grid-area: lang;
