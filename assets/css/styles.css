@@ -82,7 +82,7 @@ button, input, select, textarea { font: inherit; }
 }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; white-space: nowrap; color: #fff; }
 .brand img { width: 50px; height: 50px; object-fit: contain; filter: drop-shadow(0 0 22px rgba(56,217,255,.38)); }
-nav { display: flex; align-items: center; gap: 18px; margin-inline-start: auto; color: #c8dcef; font-weight: 800; }
+nav { flex: 1; display: flex; align-items: center; justify-content: center; gap: 18px; margin-inline-start: 0; color: #c8dcef; font-weight: 800; }
 nav a { position: relative; padding: 9px 0; }
 nav a:after {
   content: "";
