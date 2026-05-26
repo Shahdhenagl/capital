@@ -10,7 +10,20 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body class="admin-body">
-  <main class="dashboard">
+  <section class="auth-screen" id="authScreen">
+    <form class="auth-card" id="loginForm">
+      <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
+      <span class="eyebrow">دخول آمن</span>
+      <h1>داشبورد عاصمة الكون</h1>
+      <label>كلمة المرور
+        <input name="password" type="password" inputmode="numeric" autocomplete="current-password" required placeholder="ادخل كلمة المرور">
+      </label>
+      <button class="primary" type="submit">دخول الداشبورد</button>
+      <p class="form-status" id="loginStatus" role="status"></p>
+    </form>
+  </section>
+
+  <main class="dashboard is-locked" id="dashboardApp">
     <aside class="dash-sidebar">
       <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
       <h1>داشبورد عاصمة الكون</h1>
@@ -22,7 +35,10 @@
           <span class="eyebrow">تحكم سريع</span>
           <h2>المحتوى، الخدمات، الطلبات، وإعدادات Supabase</h2>
         </div>
-        <button class="primary" id="saveAll">حفظ كل التعديلات</button>
+        <div class="dash-actions">
+          <button class="ghost dark" id="logoutAdmin" type="button">تسجيل خروج</button>
+          <button class="primary" id="saveAll" type="button">حفظ كل التعديلات</button>
+        </div>
       </div>
 
       <div class="dash-grid">
@@ -56,6 +72,20 @@
           <div id="faqEditor"></div>
           <button class="ghost dark" id="addFaq">إضافة سؤال</button>
         </section>
+
+        <form class="dash-panel password-panel" id="passwordForm">
+          <h3>تغيير كلمة مرور الداشبورد</h3>
+          <p>يلزم إدخال كلمة المرور القديمة، ثم إرسال OTP إلى رقم الإدارة والتحقق منه قبل الحفظ.</p>
+          <label>كلمة المرور القديمة<input name="oldPassword" type="password" autocomplete="current-password"></label>
+          <label>كلمة المرور الجديدة<input name="newPassword" type="password" autocomplete="new-password"></label>
+          <label>تأكيد كلمة المرور الجديدة<input name="confirmPassword" type="password" autocomplete="new-password"></label>
+          <div class="otp-row">
+            <button class="ghost dark" id="sendOtp" type="button">إرسال OTP على واتساب</button>
+            <label>كود OTP<input name="otp" inputmode="numeric" autocomplete="one-time-code" placeholder="6 أرقام"></label>
+          </div>
+          <button class="primary wide" type="submit">تغيير كلمة السر</button>
+          <p class="form-status" id="passwordStatus" role="status"></p>
+        </form>
       </div>
 
       <section class="dash-panel leads-panel">

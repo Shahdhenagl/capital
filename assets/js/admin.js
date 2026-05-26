@@ -1,6 +1,127 @@
 (function () {
   const api = window.CapitalUniverse;
+  const DEFAULT_PASSWORD = "123456";
+  const PASSWORD_KEY = "capitalUniverseAdminPassword";
+  const SESSION_KEY = "capitalUniverseAdminAuthed";
+  const OTP_KEY = "capitalUniversePasswordOtp";
+  const ADMIN_OTP_PHONE = "01120442206";
   let data = api.getData();
+
+  function getPassword() {
+    return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+  }
+
+  function setPassword(password) {
+    localStorage.setItem(PASSWORD_KEY, password);
+  }
+
+  function normalizePhone(phone) {
+    const digits = String(phone || "").replace(/\D/g, "");
+    if (digits.startsWith("00")) return digits.slice(2);
+    if (digits.startsWith("0")) return "2" + digits;
+    return digits || "201120442206";
+  }
+
+  function showDashboard() {
+    document.getElementById("authScreen").classList.add("is-hidden");
+    document.getElementById("dashboardApp").classList.remove("is-locked");
+  }
+
+  function showLogin() {
+    document.getElementById("authScreen").classList.remove("is-hidden");
+    document.getElementById("dashboardApp").classList.add("is-locked");
+  }
+
+  function bindAuth() {
+    const loginForm = document.getElementById("loginForm");
+    const loginStatus = document.getElementById("loginStatus");
+    if (sessionStorage.getItem(SESSION_KEY) === "true") showDashboard();
+    loginForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const password = new FormData(loginForm).get("password");
+      if (password !== getPassword()) {
+        loginStatus.textContent = "كلمة المرور غير صحيحة.";
+        return;
+      }
+      sessionStorage.setItem(SESSION_KEY, "true");
+      loginForm.reset();
+      loginStatus.textContent = "";
+      showDashboard();
+    });
+    document.getElementById("logoutAdmin").addEventListener("click", () => {
+      sessionStorage.removeItem(SESSION_KEY);
+      showLogin();
+    });
+  }
+
+  function bindPasswordChange() {
+    const form = document.getElementById("passwordForm");
+    const status = document.getElementById("passwordStatus");
+    const sendOtp = document.getElementById("sendOtp");
+
+    sendOtp.addEventListener("click", () => {
+      const fd = new FormData(form);
+      const oldPassword = fd.get("oldPassword");
+      const newPassword = fd.get("newPassword");
+      const confirmPassword = fd.get("confirmPassword");
+      if (oldPassword !== getPassword()) {
+        status.textContent = "كلمة المرور القديمة غير صحيحة.";
+        return;
+      }
+      if (!newPassword || newPassword.length < 6) {
+        status.textContent = "كلمة المرور الجديدة يجب ألا تقل عن 6 أرقام أو حروف.";
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        status.textContent = "تأكيد كلمة المرور غير مطابق.";
+        return;
+      }
+      const otp = String(Math.floor(100000 + Math.random() * 900000));
+      localStorage.setItem(OTP_KEY, JSON.stringify({
+        code: otp,
+        expiresAt: Date.now() + 5 * 60 * 1000
+      }));
+      const message = `كود تغيير كلمة مرور داشبورد عاصمة الكون هو: ${otp}\nالكود صالح لمدة 5 دقائق.`;
+      status.textContent = "تم توليد OTP. سيتم فتح واتساب لإرساله إلى رقم الإدارة.";
+      window.open(`https://wa.me/${normalizePhone(ADMIN_OTP_PHONE)}?text=${encodeURIComponent(message)}`, "_blank");
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const fd = new FormData(form);
+      const oldPassword = fd.get("oldPassword");
+      const newPassword = fd.get("newPassword");
+      const confirmPassword = fd.get("confirmPassword");
+      const otpValue = String(fd.get("otp") || "").trim();
+      const otpState = JSON.parse(localStorage.getItem(OTP_KEY) || "null");
+
+      if (oldPassword !== getPassword()) {
+        status.textContent = "كلمة المرور القديمة غير صحيحة.";
+        return;
+      }
+      if (!newPassword || newPassword.length < 6) {
+        status.textContent = "كلمة المرور الجديدة يجب ألا تقل عن 6 أرقام أو حروف.";
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        status.textContent = "تأكيد كلمة المرور غير مطابق.";
+        return;
+      }
+      if (!otpState || Date.now() > otpState.expiresAt) {
+        status.textContent = "كود OTP منتهي أو غير موجود. أرسل كودا جديدا.";
+        return;
+      }
+      if (otpValue !== otpState.code) {
+        status.textContent = "كود OTP غير صحيح.";
+        return;
+      }
+
+      setPassword(newPassword);
+      localStorage.removeItem(OTP_KEY);
+      form.reset();
+      status.textContent = "تم تغيير كلمة السر بنجاح.";
+    });
+  }
 
   function fillSettings() {
     const form = document.getElementById("settingsForm");
@@ -122,6 +243,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    bindAuth();
+    bindPasswordChange();
     fillSettings();
     renderEditor();
     renderLeads();

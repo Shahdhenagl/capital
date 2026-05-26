@@ -207,17 +207,61 @@ fieldset { grid-column: 1 / -1; border: 1px solid #cbd8e5; border-radius: 8px; p
 .floating-whatsapp { position: fixed; z-index: 30; left: 22px; bottom: 22px; color: #fff; background: #1fba66; padding: 14px 18px; border-radius: 8px; font-weight: 900; box-shadow: 0 16px 36px rgba(31,186,102,.28); }
 
 .admin-body { background: #eef4fa; }
+.auth-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    linear-gradient(135deg, rgba(9,36,82,.94), rgba(15,99,182,.86)),
+    radial-gradient(circle at 18% 22%, rgba(39,184,232,.35), transparent 34%);
+}
+.auth-screen.is-hidden { display: none; }
+.auth-card {
+  width: min(460px, 100%);
+  display: grid;
+  gap: 16px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 8px;
+  background: rgba(255,255,255,.94);
+  box-shadow: var(--shadow);
+}
+.auth-card img { width: 86px; }
+.auth-card h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 34px;
+}
+.dashboard.is-locked {
+  max-height: 100vh;
+  overflow: hidden;
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+}
 .dashboard { min-height: 100vh; display: grid; grid-template-columns: 280px 1fr; }
 .dash-sidebar { position: sticky; top: 0; height: 100vh; padding: 26px; background: var(--navy); color: #fff; }
 .dash-sidebar img { width: 92px; margin-bottom: 18px; }
 .dash-sidebar h1 { font-size: 26px; line-height: 1.25; }
 .dash-sidebar a { display: inline-flex; margin-top: 16px; color: #bfe9ff; font-weight: 800; }
 .dash-content { padding: 28px; min-width: 0; }
-.dash-head, .panel-title { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 20px; }
+.dash-head, .panel-title, .dash-actions { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 20px; }
+.dash-actions { margin-bottom: 0; justify-content: flex-start; flex-wrap: wrap; }
 .dash-head h2 { color: var(--navy); margin: 6px 0 0; }
 .dash-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .dash-panel { padding: 20px; }
 .dash-panel h3 { color: var(--navy); margin-bottom: 16px; }
+.password-panel p { color: var(--muted); line-height: 1.7; }
+.otp-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: end;
+}
 .editor-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: start; margin-bottom: 10px; }
 .editor-row textarea { min-height: 46px; }
 .remove { background: #ffe8ea; color: #a01828; border: 0; border-radius: 8px; min-height: 46px; padding: 0 12px; cursor: pointer; font-weight: 900; }
@@ -236,6 +280,7 @@ th { color: var(--navy); background: #f4f8fc; }
   .smart-form { grid-template-columns: 1fr; }
   .check-grid { grid-template-columns: 1fr; }
   .dash-sidebar { position: static; height: auto; }
+  .otp-row { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 620px) {
