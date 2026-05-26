@@ -923,7 +923,7 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .header-tools { display: contents; }
   .header-cta {
     grid-area: action;
-    justify-self: end;
+    justify-self: start;
     width: min(190px, 100%);
     min-height: 42px;
     padding: 10px 14px;
