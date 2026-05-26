@@ -190,10 +190,10 @@
 
   const defaults = {
     settings: {
-      whatsapp: "01120442206",
-      phone: "+966544113161",
+      whatsapp: "966544113161",
+      phone: "544113161",
       email: "marketing@fujiyem.com",
-      address: "السعودية - مكة - جدة",
+      address: "المركز الرائيسي مكة المكرمة - العزيزية - شارع عبدالله خياط",
       instagram: "",
       facebook: "",
       tiktok: "",
@@ -298,7 +298,7 @@
     const footerEmail = document.getElementById("footerEmail");
     if (footerEmail) footerEmail.textContent = settings.email;
     const footerAddress = document.getElementById("footerAddress");
-    if (footerAddress) footerAddress.textContent = currentLang === "en" ? "Saudi Arabia - Makkah - Jeddah" : settings.address;
+    if (footerAddress) footerAddress.textContent = settings.address;
 
     const serviceGrid = document.getElementById("serviceGrid");
     if (serviceGrid) {
