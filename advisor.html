@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>المعاينة الذكية | عاصمة الكون للمصاعد</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="space-site inner-page" data-lang="ar">
+  <div class="space-backdrop" aria-hidden="true"><span class="star s1"></span><span class="star s2"></span><span class="star s3"></span><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span></div>
+  <header class="site-header" id="top"><a class="brand" href="index.html"><img src="assets/img/logo.png" alt="شعار عاصمة الكون"><span data-i18n="brand">عاصمة الكون</span></a><nav aria-label="القائمة الرئيسية"><a href="journey.html" data-i18n="navJourney">الرحلة</a><a href="services.html" data-i18n="navServices">الخدمات</a><a href="catalog.html" data-i18n="navCatalog">الكتالوج</a><a class="active" href="advisor.html" data-i18n="navAdvisor">المعاينة الذكية</a><a href="contact.html" data-i18n="navContact">تواصل</a></nav><div class="header-tools"><button class="lang-toggle" id="langToggle" type="button">EN</button><a class="header-cta" href="advisor.html" data-i18n="bookVisit">احجز معاينة</a></div></header>
+  <main>
+    <section class="section advisor standalone-advisor" id="advisor">
+      <div class="advisor-copy"><span class="eyebrow" data-i18n="advisorKicker">المعاينة الذكية</span><h1 data-i18n="advisorPageTitle">احجز معاينة بخطوات سهلة.</h1><p data-i18n="advisorText">اختار الخدمة، نوع المبنى، المدينة، وعدد المصاعد. الطلب يتسجل في الداشبورد، ويتجهز كرسالة واتساب منظمة لفريق عاصمة الكون.</p><div class="signal-card"><strong data-i18n="signalTitle">وعد التشغيل</strong><span data-i18n="signalText">فحص وتوصية واضحة قبل أي قرار شراء أو صيانة.</span></div></div>
+      <form class="smart-form wizard-form" id="leadForm">
+        <div class="wizard-progress" aria-hidden="true"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+        <section class="wizard-step active" data-step="0"><span class="step-count" data-i18n="stepOne">الخطوة 1 من 5</span><h3 data-i18n="stepContactTitle">نبدأ ببيانات التواصل</h3><div class="step-grid"><label><span data-i18n="fieldName">اسم العميل أو المنشأة</span><input name="name" required data-i18n-placeholder="fieldNamePh" placeholder="مثال: فندق / برج / مول"></label><label><span data-i18n="fieldPhone">رقم الجوال</span><input name="phone" required inputmode="tel" placeholder="05xxxxxxxx"></label></div></section>
+        <section class="wizard-step" data-step="1"><span class="step-count" data-i18n="stepTwo">الخطوة 2 من 5</span><h3 data-i18n="stepPlaceTitle">اختار المدينة ونوع المبنى</h3><div class="choice-block"><strong data-i18n="fieldCity">المدينة</strong><div class="choice-grid" data-choice-group="city"></div></div><div class="choice-block"><strong data-i18n="fieldBuilding">نوع المبنى</strong><div class="choice-grid" data-choice-group="building"></div></div></section>
+        <section class="wizard-step" data-step="2"><span class="step-count" data-i18n="stepThree">الخطوة 3 من 5</span><h3 data-i18n="stepScopeTitle">حدد حجم الطلب وأولويته</h3><label class="elevator-count"><span data-i18n="fieldElevators">عدد المصاعد</span><input name="elevators" type="number" min="1" value="1"></label><div class="choice-block"><strong data-i18n="fieldUrgency">الأولوية</strong><div class="choice-grid" data-choice-group="urgency"></div></div></section>
+        <section class="wizard-step" data-step="3"><span class="step-count" data-i18n="stepFour">الخطوة 4 من 5</span><h3 data-i18n="stepServicesTitle">اختار الخدمات المطلوبة</h3><div class="choice-grid services-choice-grid" id="serviceChoices"></div></section>
+        <section class="wizard-step" data-step="4"><span class="step-count" data-i18n="stepFive">الخطوة 5 من 5</span><h3 data-i18n="stepNotesTitle">آخر تفاصيل قبل إرسال الطلب</h3><label class="wide"><span data-i18n="fieldNotes">ملاحظات إضافية</span><textarea name="notes" rows="4" data-i18n-placeholder="fieldNotesPh" placeholder="نوع المصعد، عمره، العطل، أو مواصفات المشروع"></textarea></label><button class="primary wide" type="submit" data-i18n="submitLead">إرسال الطلب وفتح واتساب</button></section>
+        <div class="wizard-actions"><button class="ghost" id="prevStep" type="button" data-i18n="prevStep">السابق</button><button class="primary" id="nextStep" type="button" data-i18n="nextStep">التالي</button></div><p class="form-status" id="formStatus" role="status"></p>
+      </form>
+    </section>
+  </main>
+  <footer class="footer"><div><img src="assets/img/logo.png" alt="شعار عاصمة الكون"><p data-i18n="footerText">عاصمة الكون للمصاعد، وكلاء FUJI YEM. حلول تركيب وصيانة وتحديث للمصاعد في المملكة العربية السعودية.</p></div><div><h3 data-i18n="contactTitle">تواصل معنا</h3><p id="footerPhone">01120442206</p><p id="footerEmail">marketing@fujiyem.com</p><p id="footerAddress">السعودية - مكة - جدة</p></div><div><h3 data-i18n="adminTitle">إدارة الموقع</h3><a href="admin.html" data-i18n="adminLogin">الدخول للداشبورد</a></div></footer>
+  <a class="floating-whatsapp" id="floatingWhatsapp" href="https://wa.me/201120442206" aria-label="واتساب" data-i18n="floatingWhatsapp">واتساب</a>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
