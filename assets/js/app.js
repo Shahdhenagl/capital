@@ -2,6 +2,7 @@
   const i18n = {
     ar: {
       brand: "عاصمة الكون",
+      navHome: "الرئيسية",
       navJourney: "الرحلة",
       navServices: "الخدمات",
       navCatalog: "الكتالوج",
@@ -94,6 +95,7 @@
     },
     en: {
       brand: "Capital of Universe",
+      navHome: "Home",
       navJourney: "Journey",
       navServices: "Services",
       navCatalog: "Catalog",
