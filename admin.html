@@ -23,6 +23,22 @@
     </form>
   </section>
 
+  <section class="auth-screen is-hidden" id="ownerResetScreen">
+    <form class="auth-card" id="ownerResetForm">
+      <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
+      <span class="eyebrow">تغيير كلمة المرور</span>
+      <h1>إعداد كلمة مرور جديدة</h1>
+      <label>كلمة المرور الجديدة
+        <input name="newPassword" type="password" autocomplete="new-password" required placeholder="اكتب كلمة المرور الجديدة">
+      </label>
+      <label>تأكيد كلمة المرور
+        <input name="confirmPassword" type="password" autocomplete="new-password" required placeholder="أعد كتابة كلمة المرور">
+      </label>
+      <button class="primary" type="submit">حفظ كلمة المرور الجديدة</button>
+      <p class="form-status" id="ownerResetStatus" role="status"></p>
+    </form>
+  </section>
+
   <main class="dashboard is-locked" id="dashboardApp">
     <aside class="dash-sidebar">
       <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
@@ -75,15 +91,8 @@
 
         <form class="dash-panel password-panel" id="passwordForm">
           <h3>تغيير كلمة مرور الداشبورد</h3>
-          <p>يلزم إدخال كلمة المرور القديمة، ثم إرسال OTP إلى رقم الإدارة والتحقق منه قبل الحفظ.</p>
-          <label>كلمة المرور القديمة<input name="oldPassword" type="password" autocomplete="current-password"></label>
-          <label>كلمة المرور الجديدة<input name="newPassword" type="password" autocomplete="new-password"></label>
-          <label>تأكيد كلمة المرور الجديدة<input name="confirmPassword" type="password" autocomplete="new-password"></label>
-          <div class="otp-row">
-            <button class="ghost dark" id="sendOtp" type="button">إرسال OTP على واتساب</button>
-            <label>كود OTP<input name="otp" inputmode="numeric" autocomplete="one-time-code" placeholder="6 أرقام"></label>
-          </div>
-          <button class="primary wide" type="submit">تغيير كلمة السر</button>
+          <p>اضغط الزر لإرسال لينك تغيير كلمة المرور إلى رقم الإدارة على واتساب. مالك الموقع فقط يفتح اللينك ويكتب كلمة المرور الجديدة.</p>
+          <button class="primary wide" id="sendPasswordResetLink" type="button">إرسال لينك التغيير على واتساب</button>
           <p class="form-status" id="passwordStatus" role="status"></p>
         </form>
       </div>
