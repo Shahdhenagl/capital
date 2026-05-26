@@ -900,8 +900,8 @@ th { color: #fff; background: rgba(255,255,255,.07); }
     display: grid;
     grid-template-columns: 52px minmax(0, 1fr);
     grid-template-areas:
-      "brand toggle"
-      "action lang";
+      "toggle brand"
+      "lang action";
     justify-content: stretch;
     align-items: center;
     gap: 8px 10px;
@@ -911,18 +911,18 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .brand {
     grid-area: brand;
     width: auto;
-    justify-content: flex-start;
+    justify-content: flex-end;
     gap: 8px;
-    text-align: start;
+    text-align: right;
     font-size: 15px;
     min-width: 0;
   }
   .brand img { width: 40px; height: 40px; }
-  .menu-toggle { grid-area: toggle; display: inline-flex; justify-self: end; }
+  .menu-toggle { grid-area: toggle; display: inline-flex; justify-self: start; }
   .header-tools { display: contents; }
   .header-cta {
     grid-area: action;
-    justify-self: start;
+    justify-self: end;
     width: min(190px, 100%);
     min-height: 42px;
     padding: 10px 14px;
@@ -931,7 +931,7 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   }
   .lang-toggle {
     grid-area: lang;
-    justify-self: end;
+    justify-self: start;
     width: 52px;
     min-height: 42px;
     border-radius: 12px;
