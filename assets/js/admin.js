@@ -132,6 +132,31 @@
     ], "faqs");
   }
 
+  function updateSummary() {
+    const leads = JSON.parse(localStorage.getItem("capitalUniverseLeads") || "[]");
+    const map = {
+      summaryServices: data.services.length,
+      summaryCatalog: data.catalog.length,
+      summaryFaqs: data.faqs.length,
+      summaryLeads: leads.length
+    };
+    Object.entries(map).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    });
+  }
+
+  function bindModules() {
+    const buttons = Array.from(document.querySelectorAll("[data-module-target]"));
+    const modules = Array.from(document.querySelectorAll(".dashboard-module"));
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        buttons.forEach(item => item.classList.toggle("active", item === button));
+        modules.forEach(module => module.classList.toggle("active", module.id === button.dataset.moduleTarget));
+      });
+    });
+  }
+
   function renderRows(containerId, rows, fields, key) {
     const box = document.getElementById(containerId);
     box.innerHTML = rows.map((row, index) => `
@@ -168,6 +193,7 @@
     api.saveData(data);
     api.renderPublic();
     renderLeads();
+    updateSummary();
     alert("تم حفظ التعديلات بنجاح");
   }
 
@@ -209,6 +235,7 @@
         <td>${api.escapeHtml(lead.urgency)}</td>
       </tr>
     `).join("") || `<tr><td colspan="6">لا توجد طلبات بعد.</td></tr>`;
+    updateSummary();
   }
 
   function exportLeads() {
@@ -229,9 +256,11 @@
   document.addEventListener("DOMContentLoaded", () => {
     bindAuth();
     bindPasswordChange();
+    bindModules();
     fillSettings();
     renderEditor();
     renderLeads();
+    updateSummary();
     bindAdds();
     document.getElementById("saveAll").addEventListener("click", saveAll);
     document.getElementById("exportLeads").addEventListener("click", exportLeads);

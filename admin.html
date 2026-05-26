@@ -41,9 +41,23 @@
 
   <main class="dashboard is-locked" id="dashboardApp">
     <aside class="dash-sidebar">
-      <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
-      <h1>داشبورد عاصمة الكون</h1>
-      <a href="index.html">عرض الموقع</a>
+      <div class="dash-brand">
+        <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
+        <div>
+          <span>Capital Control</span>
+          <h1>داشبورد عاصمة الكون</h1>
+        </div>
+      </div>
+      <nav class="module-nav" aria-label="موديولز الداشبورد">
+        <button class="active" type="button" data-module-target="overviewModule">نظرة عامة</button>
+        <button type="button" data-module-target="settingsModule">الإعدادات</button>
+        <button type="button" data-module-target="servicesModule">الخدمات</button>
+        <button type="button" data-module-target="catalogModule">الكتالوج</button>
+        <button type="button" data-module-target="faqModule">الأسئلة</button>
+        <button type="button" data-module-target="leadsModule">الطلبات</button>
+        <button type="button" data-module-target="securityModule">الأمان</button>
+      </nav>
+      <a class="site-preview-link" href="index.html">عرض الموقع</a>
     </aside>
     <section class="dash-content">
       <div class="dash-head">
@@ -57,59 +71,91 @@
         </div>
       </div>
 
-      <div class="dash-grid">
-        <form class="dash-panel" id="settingsForm">
-          <h3>الإعدادات العامة</h3>
-          <label>رقم واتساب<input name="whatsapp"></label>
-          <label>رقم الهاتف<input name="phone"></label>
-          <label>البريد الإلكتروني<input name="email"></label>
-          <label>العنوان<input name="address"></label>
-          <label>Instagram<input name="instagram"></label>
-          <label>Facebook<input name="facebook"></label>
-          <label>TikTok<input name="tiktok"></label>
-          <label>Supabase URL<input name="supabaseUrl" placeholder="https://xxxx.supabase.co"></label>
-          <label>Supabase anon key<textarea name="supabaseKey" rows="3"></textarea></label>
-        </form>
+      <section class="dashboard-module active" id="overviewModule">
+        <div class="module-hero">
+          <div>
+            <span class="eyebrow">مركز التحكم</span>
+            <h3>كل موديول لوحده، وكل تعديل محفوظ من زر واحد.</h3>
+            <p>استخدمي القائمة الجانبية للتنقل بين الإعدادات، المحتوى، الطلبات، والأمان بدون زحمة.</p>
+          </div>
+          <img src="assets/img/fuji-yem-logo.png" alt="FUJI YEM Elevators">
+        </div>
+        <div class="summary-grid">
+          <article><strong id="summaryServices">0</strong><span>خدمات</span></article>
+          <article><strong id="summaryCatalog">0</strong><span>عناصر كتالوج</span></article>
+          <article><strong id="summaryFaqs">0</strong><span>أسئلة</span></article>
+          <article><strong id="summaryLeads">0</strong><span>طلبات</span></article>
+        </div>
+      </section>
 
-        <section class="dash-panel">
-          <h3>الخدمات</h3>
+      <section class="dashboard-module" id="settingsModule">
+        <form class="dash-panel module-panel" id="settingsForm">
+          <div class="module-title">
+            <span>01</span>
+            <div><h3>الإعدادات العامة</h3><p>بيانات التواصل والواتساب والسوشيال وSupabase.</p></div>
+          </div>
+          <div class="settings-grid">
+            <label>رقم واتساب<input name="whatsapp"></label>
+            <label>رقم الهاتف<input name="phone"></label>
+            <label>البريد الإلكتروني<input name="email"></label>
+            <label>العنوان<input name="address"></label>
+            <label>Instagram<input name="instagram"></label>
+            <label>Facebook<input name="facebook"></label>
+            <label>TikTok<input name="tiktok"></label>
+            <label>Supabase URL<input name="supabaseUrl" placeholder="https://xxxx.supabase.co"></label>
+            <label class="wide">Supabase anon key<textarea name="supabaseKey" rows="3"></textarea></label>
+          </div>
+        </form>
+      </section>
+
+      <section class="dashboard-module" id="servicesModule">
+        <section class="dash-panel module-panel">
+          <div class="module-title"><span>02</span><div><h3>الخدمات</h3><p>الخدمات تظهر في صفحة الخدمات والاستبيان الذكي.</p></div></div>
           <div id="servicesEditor"></div>
           <button class="ghost dark" id="addService">إضافة خدمة</button>
         </section>
+      </section>
 
-        <section class="dash-panel">
-          <h3>الكتالوج</h3>
+      <section class="dashboard-module" id="catalogModule">
+        <section class="dash-panel module-panel">
+          <div class="module-title"><span>03</span><div><h3>الكتالوج</h3><p>إدارة عناصر الكتالوج والفئات ونوع العرض البصري.</p></div></div>
           <div id="catalogEditor"></div>
           <button class="ghost dark" id="addCatalog">إضافة عنصر</button>
         </section>
+      </section>
 
-        <section class="dash-panel">
-          <h3>الأسئلة الشائعة</h3>
+      <section class="dashboard-module" id="faqModule">
+        <section class="dash-panel module-panel">
+          <div class="module-title"><span>04</span><div><h3>الأسئلة الشائعة</h3><p>أسئلة تظهر في الصفحة الرئيسية وتساعد العميل يقرر أسرع.</p></div></div>
           <div id="faqEditor"></div>
           <button class="ghost dark" id="addFaq">إضافة سؤال</button>
         </section>
+      </section>
 
-        <form class="dash-panel password-panel" id="passwordForm">
-          <h3>تغيير كلمة مرور الداشبورد</h3>
+      <section class="dashboard-module" id="securityModule">
+        <form class="dash-panel module-panel password-panel" id="passwordForm">
+          <div class="module-title"><span>05</span><div><h3>الأمان</h3><p>إرسال لينك تغيير كلمة المرور لمالك الموقع.</p></div></div>
           <p>اضغط الزر لإرسال لينك تغيير كلمة المرور إلى رقم الإدارة على واتساب. مالك الموقع فقط يفتح اللينك ويكتب كلمة المرور الجديدة.</p>
           <button class="primary wide" id="sendPasswordResetLink" type="button">إرسال لينك التغيير على واتساب</button>
           <p class="form-status" id="passwordStatus" role="status"></p>
         </form>
-      </div>
+      </section>
 
-      <section class="dash-panel leads-panel">
-        <div class="panel-title">
-          <h3>طلبات العملاء</h3>
-          <button class="ghost dark" id="exportLeads">تصدير CSV</button>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>التاريخ</th><th>الاسم</th><th>الجوال</th><th>المدينة</th><th>الخدمات</th><th>الأولوية</th></tr>
-            </thead>
-            <tbody id="leadsTable"></tbody>
-          </table>
-        </div>
+      <section class="dashboard-module" id="leadsModule">
+        <section class="dash-panel module-panel leads-panel">
+          <div class="panel-title">
+            <div class="module-title"><span>06</span><div><h3>طلبات العملاء</h3><p>كل طلبات الاستبيان المحلي تظهر هنا ويمكن تصديرها.</p></div></div>
+            <button class="ghost dark" id="exportLeads">تصدير CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>التاريخ</th><th>الاسم</th><th>الجوال</th><th>المدينة</th><th>الخدمات</th><th>الأولوية</th></tr>
+              </thead>
+              <tbody id="leadsTable"></tbody>
+            </table>
+          </div>
+        </section>
       </section>
     </section>
   </main>
