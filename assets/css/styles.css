@@ -727,7 +727,7 @@ fieldset { grid-column: 1 / -1; border: 1px solid rgba(170,225,255,.22); border-
   border-radius: 16px;
   color: #cfe6f7;
   background: rgba(255,255,255,.045);
-  text-align: start;
+  text-align: center;
   padding: 12px 14px;
   cursor: pointer;
   font-weight: 900;
@@ -851,27 +851,121 @@ th { color: #fff; background: rgba(255,255,255,.07); }
 
 @media (max-width: 1080px) {
   .site-header { inset: 10px; flex-wrap: wrap; }
-  nav { order: 3; width: 100%; overflow-x: auto; gap: 14px; }
+  nav { order: 3; width: 100%; justify-content: center; overflow-x: auto; gap: 14px; text-align: center; }
+  nav a { flex: 0 0 auto; text-align: center; }
   .hero, body[dir="ltr"] .hero, .orbit-panel, .advisor, .footer, .dashboard, .agent-orbital-card, .timeline-section, .contact-grid { grid-template-columns: 1fr; }
   body[dir="ltr"] .hero-copy, body[dir="ltr"] .cosmic-elevator { order: initial; }
   .cosmic-elevator { position: relative; top: auto; min-height: 520px; height: 62vh; }
   .service-grid, .catalog-grid, .dash-grid, .summary-grid { grid-template-columns: 1fr 1fr; }
   .module-hero { grid-template-columns: 1fr; }
   .module-hero img { max-width: 280px; }
-  .dash-sidebar { position: static; height: auto; }
+  .dashboard { min-height: 100vh; }
+  .dash-sidebar { position: static; height: auto; padding: 18px; border-inline-end: 0; border-bottom: 1px solid rgba(170,225,255,.16); }
+  .dash-brand { justify-content: center; text-align: center; }
+  .module-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .module-nav button { min-height: 48px; padding: 11px 10px; }
+  .module-nav button:hover,
+  body[dir="ltr"] .module-nav button:hover { transform: translateY(-2px); }
+  .site-preview-link { max-width: 260px; margin: 16px auto 0; }
 }
 
 @media (max-width: 720px) {
-  .hero { padding-top: 190px; }
+  .site-header {
+    inset: 10px 12px auto;
+    min-height: 0;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+  .brand {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    font-size: 15px;
+  }
+  .brand img { width: 40px; height: 40px; }
+  .header-tools {
+    order: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px;
+    gap: 8px;
+  }
+  .header-cta {
+    width: auto;
+    min-height: 42px;
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+  .lang-toggle {
+    width: 52px;
+    min-height: 42px;
+    border-radius: 12px;
+  }
+  nav {
+    order: 3;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    gap: 7px 13px;
+    overflow: visible;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  nav a {
+    padding: 4px 0;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .hero { padding-top: 232px; }
   h1 { font-size: 43px; }
   .section { padding-block: 62px; }
   .service-grid, .catalog-grid, .smart-form, .dash-grid, .step-grid, .choice-grid, .services-choice-grid, .summary-grid, .settings-grid { grid-template-columns: 1fr; }
   .wizard-step { min-height: 0; }
   .check-grid { grid-template-columns: 1fr; }
-  .header-tools, .header-cta { width: 100%; }
-  .header-cta { flex: 1; }
+  .admin-body { overflow-x: hidden; }
+  .auth-screen { padding: 14px; align-items: start; overflow-y: auto; }
+  .auth-card { margin-top: 18px; padding: 22px 18px; border-radius: 20px; }
+  .auth-card h1 { font-size: 28px; line-height: 1.25; }
+  .dashboard { width: 100%; }
+  .dash-sidebar { padding: 14px; }
+  .dash-brand { display: grid; justify-items: center; gap: 8px; margin-bottom: 16px; }
+  .dash-brand img { width: 54px; height: 54px; }
+  .dash-sidebar h1 { font-size: 18px; }
+  .module-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .module-nav button { min-height: 44px; border-radius: 14px; font-size: 14px; line-height: 1.25; }
+  .site-preview-link { min-height: 44px; border-radius: 14px; }
+  .dash-content { padding: 14px; }
+  .dash-head { padding: 16px; border-radius: 18px; text-align: center; }
+  .dash-head h2 { font-size: 22px; line-height: 1.35; }
   .editor-row, .editor-row[data-key="catalog"], .editor-row[data-key="faqs"], .otp-row { grid-template-columns: 1fr; }
   .dash-head, .panel-title { align-items: stretch; flex-direction: column; }
   .dash-actions { width: 100%; }
   .dash-actions button { flex: 1; }
+  .module-hero { padding: 18px; border-radius: 22px; text-align: center; }
+  .module-hero h3 { font-size: 30px; }
+  .module-hero p { font-size: 16px; }
+  .module-hero img { justify-self: center; max-width: 210px; border-radius: 18px; }
+  .summary-grid article { min-height: 118px; padding: 18px; text-align: center; }
+  .dash-panel { padding: 16px; }
+  .module-title { display: grid; justify-items: center; text-align: center; gap: 10px; }
+  .module-title > span { width: 48px; height: 48px; border-radius: 16px; }
+  .panel-title .ghost,
+  .module-panel > .ghost,
+  .password-panel .primary { width: 100%; }
+  input, select, textarea { min-width: 0; }
+  table { min-width: 640px; }
+}
+
+@media (max-width: 420px) {
+  .site-header { inset-inline: 8px; padding: 9px; }
+  nav { grid-template-columns: repeat(2, auto); gap: 7px 16px; }
+  .hero { padding-top: 258px; }
+  .module-nav { grid-template-columns: 1fr; }
+  .dash-actions { display: grid; }
+  .dash-actions button { width: 100%; }
 }
