@@ -530,13 +530,25 @@ h1 {
 }
 .wizard-step.active { display: grid; gap: 18px; }
 .step-count {
-  width: fit-content;
-  padding: 8px 12px;
+  justify-self: start;
+  align-self: start;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  max-width: max-content;
+  min-height: 36px;
+  aspect-ratio: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
   border: 1px solid rgba(124,255,212,.24);
   border-radius: 999px;
   color: var(--mint);
   background: rgba(124,255,212,.08);
   font-weight: 900;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 .wizard-step h3 {
   margin: 0;
