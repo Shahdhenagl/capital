@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>داشبورد عاصمة الكون</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="admin-body">
+  <main class="dashboard">
+    <aside class="dash-sidebar">
+      <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
+      <h1>داشبورد عاصمة الكون</h1>
+      <a href="index.html">عرض الموقع</a>
+    </aside>
+    <section class="dash-content">
+      <div class="dash-head">
+        <div>
+          <span class="eyebrow">تحكم سريع</span>
+          <h2>المحتوى، الخدمات، الطلبات، وإعدادات Supabase</h2>
+        </div>
+        <button class="primary" id="saveAll">حفظ كل التعديلات</button>
+      </div>
+
+      <div class="dash-grid">
+        <form class="dash-panel" id="settingsForm">
+          <h3>الإعدادات العامة</h3>
+          <label>رقم واتساب<input name="whatsapp"></label>
+          <label>رقم الهاتف<input name="phone"></label>
+          <label>البريد الإلكتروني<input name="email"></label>
+          <label>العنوان<input name="address"></label>
+          <label>Instagram<input name="instagram"></label>
+          <label>Facebook<input name="facebook"></label>
+          <label>TikTok<input name="tiktok"></label>
+          <label>Supabase URL<input name="supabaseUrl" placeholder="https://xxxx.supabase.co"></label>
+          <label>Supabase anon key<textarea name="supabaseKey" rows="3"></textarea></label>
+        </form>
+
+        <section class="dash-panel">
+          <h3>الخدمات</h3>
+          <div id="servicesEditor"></div>
+          <button class="ghost dark" id="addService">إضافة خدمة</button>
+        </section>
+
+        <section class="dash-panel">
+          <h3>الكتالوج</h3>
+          <div id="catalogEditor"></div>
+          <button class="ghost dark" id="addCatalog">إضافة عنصر</button>
+        </section>
+
+        <section class="dash-panel">
+          <h3>الأسئلة الشائعة</h3>
+          <div id="faqEditor"></div>
+          <button class="ghost dark" id="addFaq">إضافة سؤال</button>
+        </section>
+      </div>
+
+      <section class="dash-panel leads-panel">
+        <div class="panel-title">
+          <h3>طلبات العملاء</h3>
+          <button class="ghost dark" id="exportLeads">تصدير CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>التاريخ</th><th>الاسم</th><th>الجوال</th><th>المدينة</th><th>الخدمات</th><th>الأولوية</th></tr>
+            </thead>
+            <tbody id="leadsTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

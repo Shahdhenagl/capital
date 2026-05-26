@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="عاصمة الكون للمصاعد، الوكيل المعتمد لمصاعد FUJI YEM في السعودية. تركيب، صيانة، تحديث، طوارئ، وفحص مجاني للمصاعد في مكة وجدة.">
+  <title>عاصمة الكون للمصاعد | FUJI YEM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="عاصمة الكون">
+      <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
+      <span>عاصمة الكون</span>
+    </a>
+    <nav aria-label="القائمة الرئيسية">
+      <a href="#journey">الرحلة</a>
+      <a href="#services">الخدمات</a>
+      <a href="#catalog">الكتالوج</a>
+      <a href="#advisor">الاستبيان الذكي</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+    <a class="header-cta" href="#advisor">احجز معاينة</a>
+  </header>
+
+  <main>
+    <section class="hero elevator-stage" id="journey">
+      <div class="shaft" aria-hidden="true">
+        <div class="floor-lines"></div>
+        <div class="elevator-car" id="elevatorCar">
+          <div class="car-ceiling"></div>
+          <div class="car-panel">
+            <img src="assets/img/logo.png" alt="">
+            <span>FUJI YEM</span>
+          </div>
+          <div class="car-doors">
+            <span></span><span></span>
+          </div>
+          <div class="car-floor"></div>
+        </div>
+      </div>
+      <div class="hero-copy">
+        <span class="eyebrow">الوكيل المعتمد لمصاعد FUJI YEM</span>
+        <h1>رحلة داخل مصعد فخم تقود عميلك من الفكرة إلى المعاينة.</h1>
+        <p>موقع عربي احترافي لعاصمة الكون: صيانة وتركيب وتحديث مصاعد، طوارئ سريعة، كتالوج تصميمات، واستبيان ذكي يحول الزائر إلى طلب جاهز على الداشبورد والواتساب.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#advisor">ابدأ الاستبيان</a>
+          <a class="ghost" id="heroWhatsapp" href="https://wa.me/201120442206">واتساب مباشر</a>
+        </div>
+        <div class="metrics" id="metrics">
+          <strong><b>4000+</b><span>مصعد تحت الصيانة</span></strong>
+          <strong><b>40+</b><span>سيارة خدمة</span></strong>
+          <strong><b>120+</b><span>شريك نجاح</span></strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section intro">
+      <div>
+        <span class="eyebrow">سرعة محلية وقيمة حقيقية</span>
+        <h2>لا نبيع اسما فقط، نبيع استمرارية تشغيل وأمانا واستجابة سريعة.</h2>
+      </div>
+      <p>نخدم مكة وجدة بحلول متكاملة للمصاعد: معاينة، تركيب، صيانة دورية، طوارئ، قطع غيار، وتحديث المصاعد القديمة. حملتنا الأساسية: فحص مجاني وتقرير حالة موثق خلال 48 ساعة.</p>
+    </section>
+
+    <section class="section services" id="services">
+      <div class="section-head">
+        <span class="eyebrow">خدمات يمكن تعديلها من الداشبورد</span>
+        <h2>كل ما يحتاجه المصعد في مكان واحد</h2>
+      </div>
+      <div class="service-grid" id="serviceGrid"></div>
+    </section>
+
+    <section class="section catalog" id="catalog">
+      <div class="section-head">
+        <span class="eyebrow">كتالوج عاصمة الكون</span>
+        <h2>اختار الشكل والخدمة المناسبة قبل المعاينة</h2>
+      </div>
+      <div class="tabs" id="catalogTabs"></div>
+      <div class="catalog-grid" id="catalogGrid"></div>
+    </section>
+
+    <section class="section advisor" id="advisor">
+      <div class="advisor-copy">
+        <span class="eyebrow">الآلية الذكية</span>
+        <h2>استبيان مصاعد يحول الإجابات إلى توصية وطلب واضح.</h2>
+        <p>العميل يختار الخدمة من الخدمات التي تضيفيها في الداشبورد، ثم يحدد نوع المبنى وعدد المصاعد والمدينة والأولوية. الطلب يتسجل محليا، ويرسل إلى Supabase عند تفعيل المفاتيح، ويفتح رسالة واتساب جاهزة.</p>
+      </div>
+      <form class="smart-form" id="leadForm">
+        <label>اسم العميل أو المنشأة<input name="name" required placeholder="مثال: فندق / برج / مال"></label>
+        <label>رقم الجوال<input name="phone" required inputmode="tel" placeholder="05xxxxxxxx"></label>
+        <label>المدينة
+          <select name="city">
+            <option>مكة المكرمة</option>
+            <option>جدة</option>
+            <option>الطائف</option>
+            <option>مدينة أخرى</option>
+          </select>
+        </label>
+        <label>نوع المبنى
+          <select name="building">
+            <option>فندق</option>
+            <option>سكني</option>
+            <option>تجاري</option>
+            <option>طبي</option>
+            <option>مشروع تحت الإنشاء</option>
+          </select>
+        </label>
+        <label>عدد المصاعد<input name="elevators" type="number" min="1" value="1"></label>
+        <label>الأولوية
+          <select name="urgency">
+            <option>معاينة خلال 48 ساعة</option>
+            <option>عطل طارئ الآن</option>
+            <option>عرض سعر خلال الأسبوع</option>
+            <option>استشارة تصميم</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>الخدمات المطلوبة</legend>
+          <div class="check-grid" id="serviceChoices"></div>
+        </fieldset>
+        <label class="wide">ملاحظات إضافية<textarea name="notes" rows="4" placeholder="نوع المصعد، العمر التقريبي، العطل، أو مواصفات المشروع"></textarea></label>
+        <button class="primary wide" type="submit">إرسال الطلب وفتح واتساب</button>
+        <p class="form-status" id="formStatus" role="status"></p>
+      </form>
+    </section>
+
+    <section class="section faq">
+      <div class="section-head">
+        <span class="eyebrow">أسئلة شائعة</span>
+        <h2>إجابات مختصرة قبل قرار المعاينة</h2>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div>
+      <img src="assets/img/logo.png" alt="شعار عاصمة الكون">
+      <p>عاصمة الكون للمصاعد، وكلاء FUJI YEM. حلول تركيب وصيانة وتحديث للمصاعد في المملكة العربية السعودية.</p>
+    </div>
+    <div>
+      <h3>تواصل معنا</h3>
+      <p id="footerPhone">01120442206</p>
+      <p id="footerEmail">marketing@fujiyem.com</p>
+      <p id="footerAddress">السعودية - مكة - جدة</p>
+    </div>
+    <div>
+      <h3>إدارة الموقع</h3>
+      <a href="admin.html">الدخول للداشبورد</a>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp" id="floatingWhatsapp" href="https://wa.me/201120442206" aria-label="واتساب">واتساب</a>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
