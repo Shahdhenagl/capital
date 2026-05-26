@@ -524,6 +524,18 @@
     bindScrollElevator();
     bindTilt();
     bindWizard();
+    const header = document.querySelector(".site-header");
+    const menuToggle = document.getElementById("menuToggle");
+    if (header && menuToggle) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = header.classList.toggle("is-menu-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+      header.querySelectorAll("nav a").forEach(link => link.addEventListener("click", () => {
+        header.classList.remove("is-menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }));
+    }
     const form = document.getElementById("leadForm");
     if (form) form.addEventListener("submit", submitLead);
     const langToggle = document.getElementById("langToggle");
