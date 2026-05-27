@@ -44,67 +44,60 @@ button, input, select, textarea { font: inherit; }
   overflow: hidden;
   z-index: 0;
   background:
-    radial-gradient(circle at 76% 14%, rgba(124,255,212,.2), transparent 30%),
-    radial-gradient(circle at 18% 18%, rgba(56,217,255,.24), transparent 34%),
-    #050816;
-}
-.space-motion-video {
-  position: absolute;
-  inset: -10vh -10vw;
-  width: 120vw;
-  height: 120vh;
-  max-width: none;
-  object-fit: cover;
-  opacity: .82;
-  filter: saturate(1.18) contrast(1.06);
-  transform: translateZ(0);
-  will-change: transform;
-  animation: spaceVideoDrift 20s ease-in-out infinite alternate;
+    radial-gradient(circle at 72% 12%, rgba(56,217,255,.16), transparent 28%),
+    radial-gradient(circle at 18% 18%, rgba(124,255,212,.12), transparent 32%),
+    linear-gradient(180deg, #050816 0%, #071426 48%, #020713 100%);
 }
 .space-backdrop:before {
   content: "";
   position: absolute;
-  inset: -20%;
-  opacity: .36;
-  background-image:
-    linear-gradient(rgba(139,223,255,.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139,223,255,.16) 1px, transparent 1px);
-  background-size: 96px 96px;
-  transform: perspective(900px) rotateX(62deg) scale(1.3) translateZ(0);
-  transform-origin: center bottom;
-  will-change: background-position;
-  animation: starDrift 22s linear infinite;
+  inset: -160px;
+  opacity: .58;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(56,217,255,.85) 0 1px, transparent 1.7px),
+    radial-gradient(circle, rgba(124,255,212,.75) 0 1.3px, transparent 2px);
+  background-size: 130px 130px, 210px 210px, 340px 340px;
+  background-position: 0 0, 60px 90px, 120px 40px;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  animation: spaceFieldDrift 46s linear infinite;
 }
 .space-backdrop:after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -14%;
+  opacity: .72;
   background:
-    linear-gradient(115deg, transparent 0 22%, rgba(56,217,255,.2) 23%, transparent 24% 52%, rgba(124,255,212,.18) 53%, transparent 54%),
-    radial-gradient(circle at 50% 18%, rgba(124,255,212,.16), transparent 30%),
-    radial-gradient(circle at 78% 36%, rgba(56,217,255,.18), transparent 30%),
-    linear-gradient(180deg, rgba(2,7,19,.08), rgba(2,7,19,.42) 58%, rgba(2,7,19,.86));
-  will-change: opacity, transform;
-  animation: techSweep 14s ease-in-out infinite alternate;
+    radial-gradient(ellipse at 18% 32%, rgba(56,217,255,.26), transparent 36%),
+    radial-gradient(ellipse at 78% 22%, rgba(124,255,212,.18), transparent 34%),
+    radial-gradient(ellipse at 52% 88%, rgba(10,132,255,.2), transparent 42%),
+    linear-gradient(180deg, transparent 0%, rgba(2,7,19,.64) 70%, #020713 100%);
+  transform: translate3d(0, 0, 0) scale(1.02);
+  will-change: transform, opacity;
+  animation: nebulaFloat 24s ease-in-out infinite alternate;
 }
 .star {
   position: absolute;
   border-radius: 999px;
-  background: radial-gradient(circle, #fff, rgba(56,217,255,.42) 48%, transparent 70%);
-  filter: blur(.2px) drop-shadow(0 0 12px rgba(56,217,255,.8));
-  animation: pulseStar 4s ease-in-out infinite;
+  background: radial-gradient(circle, #fff, rgba(56,217,255,.48) 48%, transparent 70%);
+  box-shadow: 0 0 18px rgba(56,217,255,.42);
+  animation: pulseStar 5s ease-in-out infinite;
 }
-.s1 { width: 13px; height: 13px; top: 18%; left: 18%; }
-.s2 { width: 10px; height: 10px; top: 42%; right: 12%; animation-delay: 1.2s; }
-.s3 { width: 15px; height: 15px; bottom: 24%; left: 32%; animation-delay: 2.4s; }
+.s1 { width: 8px; height: 8px; top: 18%; left: 18%; }
+.s2 { width: 6px; height: 6px; top: 42%; right: 12%; animation-delay: 1.2s; }
+.s3 { width: 10px; height: 10px; bottom: 24%; left: 32%; animation-delay: 2.4s; }
 .orbit {
   position: absolute;
   width: 52vw;
   aspect-ratio: 1;
-  border: 1px solid rgba(56,217,255,.12);
+  border: 1px solid rgba(56,217,255,.08);
   border-radius: 50%;
   transform: rotateX(72deg) rotateZ(-16deg);
+  opacity: .28;
 }
+.orbit-one { top: 2%; left: -18%; animation: orbitDrift 32s ease-in-out infinite alternate; }
+.orbit-two { right: -20%; bottom: 8%; border-color: rgba(124,255,212,.09); animation: orbitDrift 40s ease-in-out infinite alternate-reverse; }
 .orbit-one { top: 2%; left: -18%; opacity: .35; }
 .orbit-two { right: -20%; bottom: 8%; border-color: rgba(124,255,212,.13); opacity: .35; }
 
@@ -115,17 +108,18 @@ button, input, select, textarea { font: inherit; }
   min-height: 76px;
   display: flex;
   align-items: center;
-  gap: 22px;
-  padding: 12px 16px;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 20px;
   border: 1px solid rgba(170,225,255,.22);
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(4,12,28,.78), rgba(12,42,79,.62));
   box-shadow: 0 18px 70px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.1);
   backdrop-filter: blur(22px);
 }
-.brand { display: flex; align-items: center; gap: 12px; font-weight: 900; white-space: nowrap; color: #fff; }
+.brand { flex: 0 0 auto; display: flex; align-items: center; gap: 12px; font-weight: 900; white-space: nowrap; color: #fff; }
 .brand img { width: 50px; height: 50px; object-fit: contain; filter: drop-shadow(0 0 22px rgba(56,217,255,.38)); }
-nav { flex: 1; display: flex; align-items: center; justify-content: center; gap: 18px; margin-inline-start: 0; color: #c8dcef; font-weight: 800; }
+nav { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; justify-content: center; gap: clamp(12px, 1.4vw, 18px); margin-inline-start: 0; color: #c8dcef; font-weight: 800; }
 nav a { position: relative; padding: 9px 0; }
 nav a:after {
   content: "";
@@ -140,7 +134,7 @@ nav a:after {
 nav a:hover:after { transform: scaleX(1); }
 nav a.active { color: #fff; }
 nav a.active:after { transform: scaleX(1); }
-.header-tools { display: flex; gap: 10px; align-items: center; }
+.header-tools { flex: 0 0 auto; display: flex; gap: 10px; align-items: center; }
 .menu-toggle {
   display: none;
   width: 46px;
@@ -181,7 +175,7 @@ nav a.active:after { transform: scaleX(1); }
   background: rgba(255,255,255,.08);
 }
 .header-cta, .primary {
-  padding: 12px 20px;
+  padding: 12px 18px;
   color: #02111f;
   background: linear-gradient(135deg, #f8dc8d, #38d9ff 68%, #7cffd4);
   box-shadow: 0 16px 44px rgba(56,217,255,.24);
@@ -1035,24 +1029,27 @@ th, td { text-align: right; border-bottom: 1px solid rgba(170,225,255,.14); padd
 th { color: #fff; background: rgba(255,255,255,.07); }
 .ghost.dark { background: rgba(255,255,255,.08); color: #fff; }
 
-@keyframes starDrift {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 0 80px, 80px 0; }
+@keyframes starDrift { from { transform: translateY(0); } to { transform: translateY(140px); } }
+@keyframes spaceFieldDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-130px, 130px, 0); }
 }
-@keyframes spaceVideoDrift {
-  from { transform: translate3d(-.7vw, -.5vh, 0) scale(1); }
-  to { transform: translate3d(.7vw, .5vh, 0) scale(1.025); }
+@keyframes nebulaFloat {
+  from { opacity: .56; transform: translate3d(-1.5vw, -.8vh, 0) scale(1.02); }
+  to { opacity: .78; transform: translate3d(1.5vw, .8vh, 0) scale(1.06); }
 }
-@keyframes techSweep {
-  from { opacity: .38; transform: translate3d(-2vw, 0, 0); }
-  to { opacity: .68; transform: translate3d(2vw, 0, 0); }
+@keyframes orbitDrift {
+  from { transform: translate3d(-1vw, 0, 0) rotateX(72deg) rotateZ(-16deg); }
+  to { transform: translate3d(1vw, 1vh, 0) rotateX(72deg) rotateZ(8deg); }
 }
 @keyframes pulseStar { 0%, 100% { opacity: .45; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.25); } }
 @keyframes shaftBreath { 0%, 100% { opacity: .6; } 50% { opacity: 1; } }
 @keyframes stepIn { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 @media (max-width: 1080px) {
-  .site-header { inset: 10px; flex-wrap: wrap; }
+  .site-header { inset: 10px; flex-wrap: wrap; gap: 12px; padding: 12px; }
+  .brand { order: 1; }
+  .header-tools { order: 2; margin-inline-start: auto; }
   nav { order: 3; width: 100%; justify-content: center; overflow-x: auto; gap: 14px; text-align: center; }
   nav a { flex: 0 0 auto; text-align: center; }
   .hero, body[dir="ltr"] .hero, .orbit-panel, .advisor, .footer, .dashboard, .agent-orbital-card, .timeline-section, .contact-grid { grid-template-columns: 1fr; }

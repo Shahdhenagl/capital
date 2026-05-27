@@ -493,12 +493,8 @@
   }
 
   function bindTilt() {
-    document.addEventListener("pointermove", event => {
-      const x = (event.clientX / innerWidth - .5) * 10;
-      const y = (event.clientY / innerHeight - .5) * -10;
-      document.documentElement.style.setProperty("--tilt-x", `${y}deg`);
-      document.documentElement.style.setProperty("--tilt-y", `${x}deg`);
-    });
+    document.documentElement.style.setProperty("--tilt-x", "0deg");
+    document.documentElement.style.setProperty("--tilt-y", "0deg");
   }
 
   function showWizardStep(index) {
