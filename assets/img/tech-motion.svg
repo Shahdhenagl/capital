@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Animated technology background">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050816"/>
+      <stop offset=".5" stop-color="#071426"/>
+      <stop offset="1" stop-color="#020713"/>
+    </linearGradient>
+    <radialGradient id="cyanBloom" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#38d9ff" stop-opacity=".72"/>
+      <stop offset=".42" stop-color="#0a84ff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#38d9ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mintBloom" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#7cffd4" stop-opacity=".58"/>
+      <stop offset=".52" stop-color="#38d9ff" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#7cffd4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="96" height="96" patternUnits="userSpaceOnUse">
+      <path d="M96 0H0V96" fill="none" stroke="#8bdfff" stroke-opacity=".13" stroke-width="1"/>
+      <circle cx="0" cy="0" r="2" fill="#7cffd4" opacity=".28"/>
+    </pattern>
+    <linearGradient id="beam" x1="0" x2="1">
+      <stop offset="0" stop-color="#38d9ff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#7cffd4" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#f4c76b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#base)"/>
+
+  <g opacity=".55">
+    <rect x="-120" y="-80" width="2160" height="1240" fill="url(#grid)">
+      <animateTransform attributeName="transform" type="translate" values="0 0; -96 96" dur="30s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <g filter="url(#blur)">
+    <ellipse cx="380" cy="230" rx="520" ry="260" fill="url(#cyanBloom)">
+      <animate attributeName="cx" values="280;520;280" dur="28s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="180;290;180" dur="32s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1510" cy="230" rx="500" ry="250" fill="url(#mintBloom)">
+      <animate attributeName="cx" values="1580;1350;1580" dur="31s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="170;300;170" dur="29s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="980" cy="910" rx="760" ry="260" fill="url(#cyanBloom)" opacity=".42">
+      <animate attributeName="rx" values="620;850;620" dur="36s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <g filter="url(#glow)" opacity=".68">
+    <path d="M-80 690 C 280 520, 520 820, 910 630 S 1480 320, 2020 480" fill="none" stroke="#38d9ff" stroke-opacity=".42" stroke-width="2">
+      <animate attributeName="d" values="M-80 690 C 280 520, 520 820, 910 630 S 1480 320, 2020 480; M-80 610 C 300 780, 640 470, 980 650 S 1510 860, 2020 430; M-80 690 C 280 520, 520 820, 910 630 S 1480 320, 2020 480" dur="32s" repeatCount="indefinite"/>
+    </path>
+    <path d="M-120 340 C 260 120, 640 240, 980 180 S 1510 80, 2020 240" fill="none" stroke="#7cffd4" stroke-opacity=".34" stroke-width="2">
+      <animate attributeName="d" values="M-120 340 C 260 120, 640 240, 980 180 S 1510 80, 2020 240; M-120 260 C 260 420, 610 100, 1040 240 S 1600 420, 2020 160; M-120 340 C 260 120, 640 240, 980 180 S 1510 80, 2020 240" dur="34s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <g opacity=".75">
+    <rect x="-420" y="235" width="500" height="4" rx="2" fill="url(#beam)">
+      <animateTransform attributeName="transform" type="translate" values="0 0; 2480 260" dur="13s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;.8;0" dur="13s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="-520" y="760" width="620" height="3" rx="2" fill="url(#beam)">
+      <animateTransform attributeName="transform" type="translate" values="0 0; 2520 -180" dur="16s" begin="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;.72;0" dur="16s" begin="1.8s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <g filter="url(#glow)">
+    <circle cx="320" cy="760" r="3" fill="#7cffd4">
+      <animate attributeName="opacity" values=".2;1;.2" dur="3.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="830" cy="310" r="2.6" fill="#38d9ff">
+      <animate attributeName="opacity" values=".15;.9;.15" dur="4.4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1350" cy="690" r="3.4" fill="#f4c76b">
+      <animate attributeName="opacity" values=".15;.8;.15" dur="5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
