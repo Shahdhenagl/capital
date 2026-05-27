@@ -26,3 +26,14 @@
 ## Vercel
 
 المشروع Static ولا يحتاج build command. يمكن نشره مباشرة على Vercel من الريبو.
+
+### Vercel Supabase Environment Variables
+
+Add these in Vercel Project Settings > Environment Variables:
+
+```env
+SUPABASE_URL=https://hplsbgghcusixvbiwdwi.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+The site reads them from `/api/config` at runtime and sends new inspection requests to the `leads` table.

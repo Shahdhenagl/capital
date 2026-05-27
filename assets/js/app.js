@@ -226,15 +226,38 @@
   };
 
   let currentLang = localStorage.getItem("capitalUniverseLang") || "ar";
+  let runtimeSettings = {};
 
   function getData() {
     const saved = JSON.parse(localStorage.getItem("capitalUniverseData") || "{}");
+    const catalog = saved.catalog || defaults.catalog;
     return {
-      settings: { ...defaults.settings, ...(saved.settings || {}) },
+      settings: { ...defaults.settings, ...(saved.settings || {}), ...runtimeSettings },
       services: saved.services || defaults.services,
-      catalog: saved.catalog || defaults.catalog,
+      catalog,
+      catalogCategories: saved.catalogCategories || getCatalogCategories(catalog),
       faqs: saved.faqs || defaults.faqs
     };
+  }
+
+  function getCatalogCategories(items) {
+    return Array.from(new Set(items.map(item => item.category).filter(Boolean))).map(name => ({ name }));
+  }
+
+  async function loadRuntimeConfig() {
+    try {
+      const response = await fetch("/api/config", { cache: "no-store" });
+      if (!response.ok) return;
+      const config = await response.json();
+      runtimeSettings = Object.fromEntries(
+        Object.entries({
+          supabaseUrl: config.supabaseUrl,
+          supabaseKey: config.supabaseAnonKey
+        }).filter(([, value]) => value)
+      );
+    } catch (error) {
+      console.warn("Runtime config unavailable", error);
+    }
   }
 
   function saveData(data) {
@@ -324,25 +347,30 @@
       }).join("");
     }
 
-    renderCatalog(data.catalog);
+    renderCatalog(data.catalog, data.catalogCategories);
     renderFaqs(data.faqs);
   }
 
-  function renderCatalog(items) {
+  function renderCatalog(items, savedCategories) {
     const tabs = document.getElementById("catalogTabs");
     const grid = document.getElementById("catalogGrid");
     if (!tabs || !grid) return;
     const categoryKey = currentLang === "en" ? "categoryEn" : "category";
-    const categories = [t("all"), ...Array.from(new Set(items.map(item => item[categoryKey] || item.category)))];
+    const adminCategories = (savedCategories || []).map(item => currentLang === "en" ? (item.nameEn || item.name) : item.name).filter(Boolean);
+    const productCategories = items.map(item => item[categoryKey] || item.category).filter(Boolean);
+    const categories = [t("all"), ...Array.from(new Set([...adminCategories, ...productCategories]))];
     let active = categories[0];
     const paint = () => {
       tabs.innerHTML = categories.map(cat => `<button class="${cat === active ? "active" : ""}" data-cat="${escapeHtml(cat)}">${escapeHtml(cat)}</button>`).join("");
       const visible = active === categories[0] ? items : items.filter(item => (item[categoryKey] || item.category) === active);
       grid.innerHTML = visible.map(item => `
         <article class="catalog-card reveal-card">
-          <div class="catalog-art ${escapeHtml(item.type || "cabin")}"></div>
+          ${renderCatalogMedia(item)}
           <div class="catalog-body">
-            <span class="eyebrow">${escapeHtml(localField(item, "category", "categoryEn"))}</span>
+            <div class="catalog-meta">
+              <span class="eyebrow">${escapeHtml(localField(item, "category", "categoryEn"))}</span>
+              ${item.code ? `<b>${escapeHtml(item.code)}</b>` : ""}
+            </div>
             <h3>${escapeHtml(localField(item, "title", "titleEn"))}</h3>
             <p>${escapeHtml(localField(item, "description", "descriptionEn"))}</p>
           </div>
@@ -354,6 +382,17 @@
       }));
     };
     paint();
+  }
+
+  function renderCatalogMedia(item) {
+    if (item.image) {
+      return `
+        <figure class="catalog-art catalog-photo">
+          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(localField(item, "title", "titleEn"))}">
+        </figure>
+      `;
+    }
+    return `<div class="catalog-art ${escapeHtml(item.type || "cabin")}"></div>`;
   }
 
   function renderFaqs(items) {
@@ -419,7 +458,7 @@
   async function sendToSupabase(lead, settings) {
     if (!settings.supabaseUrl || !settings.supabaseKey) return;
     try {
-      await fetch(`${settings.supabaseUrl.replace(/\/$/, "")}/rest/v1/leads`, {
+      await fetch(`${getSupabaseRestUrl(settings.supabaseUrl)}/leads`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -432,6 +471,11 @@
     } catch (error) {
       console.warn("Supabase lead sync failed", error);
     }
+  }
+
+  function getSupabaseRestUrl(url) {
+    const cleanUrl = String(url || "").replace(/\/$/, "");
+    return cleanUrl.endsWith("/rest/v1") ? cleanUrl : `${cleanUrl}/rest/v1`;
   }
 
   function bindScrollElevator() {
@@ -520,7 +564,8 @@
   }
 
   window.CapitalUniverse = { defaults, getData, saveData, renderPublic, escapeHtml };
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
+    await loadRuntimeConfig();
     renderPublic();
     renderChoiceOptions();
     bindScrollElevator();
