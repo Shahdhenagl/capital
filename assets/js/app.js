@@ -241,18 +241,40 @@
 
   function getData() {
     const saved = remoteData || readLocalData();
-    const catalog = saved.catalog || defaults.catalog;
+    const services = mergeCollection(saved.services, defaults.services, ["titleEn", "descriptionEn"]);
+    const catalog = mergeCollection(saved.catalog, defaults.catalog, ["categoryEn", "titleEn", "descriptionEn"]);
+    const faqs = mergeCollection(saved.faqs, defaults.faqs, ["qEn", "aEn"]);
     return {
       settings: { ...defaults.settings, ...(saved.settings || {}), ...runtimeSettings },
-      services: saved.services || defaults.services,
+      services,
       catalog,
       catalogCategories: saved.catalogCategories || getCatalogCategories(catalog),
-      faqs: saved.faqs || defaults.faqs
+      faqs
     };
   }
 
+  function mergeCollection(savedItems, defaultItems, englishFields) {
+    if (!savedItems) return defaultItems;
+    return savedItems.map((item, index) => {
+      const fallback = defaultItems[index] || {};
+      const merged = { ...fallback, ...item };
+      englishFields.forEach(field => {
+        if (!merged[field] && fallback[field]) merged[field] = fallback[field];
+      });
+      return merged;
+    });
+  }
+
   function getCatalogCategories(items) {
-    return Array.from(new Set(items.map(item => item.category).filter(Boolean))).map(name => ({ name }));
+    const categories = new Map();
+    items.forEach(item => {
+      if (!item.category) return;
+      categories.set(item.category, {
+        name: item.category,
+        nameEn: item.categoryEn || ""
+      });
+    });
+    return Array.from(categories.values());
   }
 
   async function loadRuntimeConfig() {

@@ -125,13 +125,17 @@
   function renderEditor() {
     renderRows("servicesEditor", data.services, [
       ["title", "اسم الخدمة"],
+      ["titleEn", "Service name in English"],
       ["description", "وصف الخدمة"],
+      ["descriptionEn", "Service description in English"],
       ["icon", "رمز"]
     ], "services");
     renderCatalogEditor();
     renderRows("faqEditor", data.faqs, [
       ["q", "السؤال"],
-      ["a", "الإجابة"]
+      ["qEn", "Question in English"],
+      ["a", "الإجابة"],
+      ["aEn", "Answer in English"]
     ], "faqs");
   }
 
@@ -177,9 +181,11 @@
                   ${!categories.includes(item.category) && item.category ? `<option value="${api.escapeHtml(item.category)}">${api.escapeHtml(item.category)}</option>` : ""}
                 </select>
                 <input data-field="title" value="${api.escapeHtml(item.title || "")}" placeholder="اسم المنتج">
+                <input data-field="titleEn" value="${api.escapeHtml(item.titleEn || "")}" placeholder="Product name in English">
                 <input data-field="code" value="${api.escapeHtml(item.code || "")}" placeholder="كود المنتج">
                 <input data-field="type" value="${api.escapeHtml(item.type || "cabin")}" placeholder="cabin / door / marble / panel / motor / shaft">
                 <textarea data-field="description" placeholder="وصف المنتج">${api.escapeHtml(item.description || "")}</textarea>
+                <textarea data-field="descriptionEn" placeholder="Product description in English">${api.escapeHtml(item.descriptionEn || "")}</textarea>
                 <input data-field="image" value="${api.escapeHtml(item.image || "")}" placeholder="رابط الصورة أو ارفعي ملف">
               </div>
               <button class="remove remove-product" type="button">حذف</button>
@@ -229,7 +235,7 @@
       <div class="editor-row" data-key="${key}" data-index="${index}">
         ${fields.map(([field, placeholder]) => {
           const value = api.escapeHtml(row[field] || "");
-          const input = field === "description" || field === "a"
+          const input = field.toLowerCase().includes("description") || field === "a" || field === "aEn"
             ? `<textarea data-field="${field}" placeholder="${placeholder}">${value}</textarea>`
             : `<input data-field="${field}" value="${value}" placeholder="${placeholder}">`;
           return input;
@@ -261,6 +267,8 @@
       const existing = data.catalog[Number(row.dataset.productIndex)] || {};
       const item = { ...existing };
       row.querySelectorAll("[data-field]").forEach(input => item[input.dataset.field] = input.value);
+      const category = data.catalogCategories.find(entry => entry.name === item.category);
+      item.categoryEn = category ? category.nameEn : (item.categoryEn || "");
       return item;
     });
   }
@@ -277,18 +285,18 @@
   function bindAdds() {
     document.getElementById("addService").addEventListener("click", () => {
       collectData();
-      data.services.push({ title: "خدمة جديدة", description: "وصف مختصر للخدمة", icon: String(data.services.length + 1).padStart(2, "0") });
+      data.services.push({ title: "خدمة جديدة", titleEn: "New service", description: "وصف مختصر للخدمة", descriptionEn: "Short service description", icon: String(data.services.length + 1).padStart(2, "0") });
       renderEditor();
     });
     document.getElementById("addCatalog").addEventListener("click", () => {
       collectData();
-      const firstCategory = (data.catalogCategories && data.catalogCategories[0] && data.catalogCategories[0].name) || "الكبائن";
-      data.catalog.push({ category: firstCategory, title: "عنصر جديد", description: "وصف العنصر", type: "cabin", code: `PRD-${String(data.catalog.length + 1).padStart(2, "0")}`, image: "" });
+      const firstCategory = (data.catalogCategories && data.catalogCategories[0]) || { name: "الكبائن", nameEn: "Cabins" };
+      data.catalog.push({ category: firstCategory.name, categoryEn: firstCategory.nameEn || "", title: "عنصر جديد", titleEn: "New product", description: "وصف العنصر", descriptionEn: "Product description", type: "cabin", code: `PRD-${String(data.catalog.length + 1).padStart(2, "0")}`, image: "" });
       renderEditor();
     });
     document.getElementById("addFaq").addEventListener("click", () => {
       collectData();
-      data.faqs.push({ q: "سؤال جديد", a: "إجابة مختصرة" });
+      data.faqs.push({ q: "سؤال جديد", qEn: "New question", a: "إجابة مختصرة", aEn: "Short answer" });
       renderEditor();
     });
     document.addEventListener("click", event => {
