@@ -20,3 +20,36 @@ to anon
 with check (true);
 
 -- For dashboard reads in production, prefer Supabase Auth and a private admin panel.
+
+create table if not exists public.site_content (
+  id text primary key,
+  data jsonb not null,
+  updated_at timestamptz default now()
+);
+
+insert into public.site_content (id, data)
+values ('main', '{}'::jsonb)
+on conflict (id) do nothing;
+
+alter table public.site_content enable row level security;
+
+grant select, insert, update on public.site_content to anon;
+
+drop policy if exists "Allow anonymous site content reads" on public.site_content;
+create policy "Allow anonymous site content reads"
+on public.site_content for select
+to anon
+using (id = 'main');
+
+drop policy if exists "Allow anonymous site content inserts" on public.site_content;
+create policy "Allow anonymous site content inserts"
+on public.site_content for insert
+to anon
+with check (id = 'main');
+
+drop policy if exists "Allow anonymous site content updates" on public.site_content;
+create policy "Allow anonymous site content updates"
+on public.site_content for update
+to anon
+using (id = 'main')
+with check (id = 'main');

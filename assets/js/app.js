@@ -227,9 +227,20 @@
 
   let currentLang = localStorage.getItem("capitalUniverseLang") || "ar";
   let runtimeSettings = {};
+  let remoteData = null;
+  const ready = loadRuntimeConfig().then(loadRemoteData);
+
+  function readLocalData() {
+    try {
+      return JSON.parse(localStorage.getItem("capitalUniverseData") || "{}");
+    } catch (error) {
+      console.warn("Saved site data is invalid", error);
+      return {};
+    }
+  }
 
   function getData() {
-    const saved = JSON.parse(localStorage.getItem("capitalUniverseData") || "{}");
+    const saved = remoteData || readLocalData();
     const catalog = saved.catalog || defaults.catalog;
     return {
       settings: { ...defaults.settings, ...(saved.settings || {}), ...runtimeSettings },
@@ -260,8 +271,64 @@
     }
   }
 
+  function getSupabaseRestUrl(url) {
+    const cleanUrl = String(url || "").replace(/\/$/, "");
+    return cleanUrl.endsWith("/rest/v1") ? cleanUrl : `${cleanUrl}/rest/v1`;
+  }
+
+  async function loadRemoteData() {
+    const local = readLocalData();
+    const settings = { ...defaults.settings, ...(local.settings || {}), ...runtimeSettings };
+    if (!settings.supabaseUrl || !settings.supabaseKey) return;
+    try {
+      const response = await fetch(`${getSupabaseRestUrl(settings.supabaseUrl)}/site_content?id=eq.main&select=data`, {
+        cache: "no-store",
+        headers: {
+          "apikey": settings.supabaseKey,
+          "Authorization": `Bearer ${settings.supabaseKey}`
+        }
+      });
+      if (!response.ok) throw new Error(`Supabase site content load failed: ${response.status}`);
+      const rows = await response.json();
+      if (rows && rows[0] && rows[0].data && Object.keys(rows[0].data).length) {
+        remoteData = rows[0].data;
+        localStorage.setItem("capitalUniverseData", JSON.stringify(remoteData));
+      }
+    } catch (error) {
+      console.warn("Supabase site content sync failed", error);
+    }
+  }
+
   function saveData(data) {
+    remoteData = data;
     localStorage.setItem("capitalUniverseData", JSON.stringify(data));
+    return saveRemoteData(data);
+  }
+
+  async function saveRemoteData(data) {
+    const settings = data.settings || {};
+    if (!settings.supabaseUrl || !settings.supabaseKey) return false;
+    try {
+      const response = await fetch(`${getSupabaseRestUrl(settings.supabaseUrl)}/site_content`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": settings.supabaseKey,
+          "Authorization": `Bearer ${settings.supabaseKey}`,
+          "Prefer": "resolution=merge-duplicates,return=minimal"
+        },
+        body: JSON.stringify({
+          id: "main",
+          data,
+          updated_at: new Date().toISOString()
+        })
+      });
+      if (!response.ok) throw new Error(`Supabase site content save failed: ${response.status}`);
+      return true;
+    } catch (error) {
+      console.warn("Supabase site content save failed", error);
+      return false;
+    }
   }
 
   function t(key) {
@@ -473,11 +540,6 @@
     }
   }
 
-  function getSupabaseRestUrl(url) {
-    const cleanUrl = String(url || "").replace(/\/$/, "");
-    return cleanUrl.endsWith("/rest/v1") ? cleanUrl : `${cleanUrl}/rest/v1`;
-  }
-
   function bindScrollElevator() {
     const stage = document.querySelector(".elevator-stage");
     if (!stage) return;
@@ -559,9 +621,9 @@
     }[char]));
   }
 
-  window.CapitalUniverse = { defaults, getData, saveData, renderPublic, escapeHtml };
+  window.CapitalUniverse = { defaults, getData, saveData, renderPublic, escapeHtml, ready };
   document.addEventListener("DOMContentLoaded", async () => {
-    await loadRuntimeConfig();
+    await ready;
     renderPublic();
     renderChoiceOptions();
     bindScrollElevator();

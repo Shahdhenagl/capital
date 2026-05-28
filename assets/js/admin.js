@@ -265,13 +265,13 @@
     });
   }
 
-  function saveAll() {
+  async function saveAll() {
     collectData();
-    api.saveData(data);
+    const synced = await api.saveData(data);
     api.renderPublic();
     renderLeads();
     updateSummary();
-    alert("تم حفظ التعديلات بنجاح");
+    alert(synced ? "تم حفظ التعديلات بنجاح" : "تم حفظ التعديلات على هذا المتصفح فقط. راجعي إعدادات Supabase.");
   }
 
   function bindAdds() {
@@ -364,7 +364,9 @@
     URL.revokeObjectURL(url);
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
+    await api.ready;
+    data = api.getData();
     bindAuth();
     bindPasswordChange();
     bindModules();
