@@ -31,6 +31,7 @@ body[dir="ltr"] { font-family: "Cairo", "Tajawal", sans-serif; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button, input, select, textarea { font: inherit; }
+h1, h2, h3, p, a, button, span, strong { overflow-wrap: break-word; }
 
 .space-site { background: #050816; }
 .space-site > :not(.space-backdrop) {
@@ -179,11 +180,13 @@ nav a.active:after { transform: scaleX(1); }
   color: #02111f;
   background: linear-gradient(135deg, #f8dc8d, #38d9ff 68%, #7cffd4);
   box-shadow: 0 16px 44px rgba(56,217,255,.24);
+  text-align: center;
 }
 .ghost {
   padding: 12px 20px;
   color: var(--text);
   background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  text-align: center;
 }
 
 .hero {
@@ -537,6 +540,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 12px;
 }
 .catalog-meta b {
@@ -670,7 +674,7 @@ h1 {
   opacity: 0;
   pointer-events: none;
 }
-.choice-card span { font-weight: 900; line-height: 1.4; }
+.choice-card span { font-weight: 900; line-height: 1.4; min-width: 0; }
 .choice-card:has(input:checked) {
   color: #03101f;
   border-color: transparent;
@@ -678,7 +682,7 @@ h1 {
   box-shadow: 0 18px 46px rgba(56,217,255,.22);
 }
 .choice-card:has(input:checked):after {
-  content: "✓";
+  content: "\2713";
   position: absolute;
   top: 10px;
   inset-inline-end: 12px;
@@ -756,6 +760,7 @@ fieldset { grid-column: 1 / -1; border: 1px solid rgba(170,225,255,.22); border-
 }
 .timeline-card h3, .contact-card strong { display: block; color: #fff; font-size: 24px; margin-bottom: 10px; }
 .timeline-card p, .contact-card span, .contact-card a { color: var(--muted); line-height: 1.8; font-weight: 800; }
+.contact-card span, .contact-card a, .footer p, .footer a { overflow-wrap: anywhere; }
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1092,24 +1097,35 @@ th { color: #fff; background: rgba(255,255,255,.07); }
     font-size: 15px;
     min-width: 0;
   }
+  .brand span {
+    min-width: 0;
+    line-height: 1.2;
+  }
   .brand img { width: 40px; height: 40px; }
-  .menu-toggle { grid-area: toggle; display: inline-flex; justify-self: start; }
+  .menu-toggle { grid-area: toggle; display: inline-flex; justify-self: end; }
   .header-tools { display: contents; }
   .header-cta {
     grid-area: action;
     justify-self: start;
-    width: min(190px, 100%);
+    width: min(230px, 100%);
     min-height: 42px;
     padding: 10px 14px;
     border-radius: 12px;
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.15;
   }
   .lang-toggle {
     grid-area: lang;
-    justify-self: start;
+    justify-self: end;
     width: 52px;
     min-height: 42px;
     border-radius: 12px;
+  }
+  body[dir="ltr"] .site-header {
+    grid-template-columns: minmax(0, 1fr) 52px;
+    grid-template-areas:
+      "brand toggle"
+      "action lang";
   }
   nav {
     position: absolute;
@@ -1129,17 +1145,78 @@ th { color: #fff; background: rgba(255,255,255,.07); }
     display: block;
     padding: 11px 12px;
     border-radius: 10px;
-    white-space: nowrap;
+    white-space: normal;
     text-align: center;
+    line-height: 1.25;
   }
   nav a.active,
   nav a:hover { background: rgba(255,255,255,.08); }
   nav a:after { display: none; }
-  .hero { padding-top: 158px; }
-  h1 { font-size: 43px; }
+  .hero {
+    min-height: auto;
+    padding-top: 158px;
+    padding-bottom: 62px;
+  }
+  h1 { font-size: 40px; line-height: 1.04; }
+  body[dir="ltr"] h1 { font-size: 38px; }
+  .compact-hero h1 { font-size: 38px; line-height: 1.08; }
+  body[dir="ltr"] .compact-hero h1 { font-size: 36px; }
+  .compact-hero p,
+  .intro p,
+  .advisor p {
+    font-size: 17px;
+    line-height: 1.75;
+  }
+  .hero-actions > *,
+  .wizard-actions > * {
+    flex: 1 1 100%;
+  }
+  .mission-strip span {
+    width: 100%;
+    text-align: center;
+  }
+  .cosmic-elevator {
+    min-height: 360px;
+    height: 54vh;
+    max-height: 520px;
+  }
   .section { padding-block: 62px; }
   .service-grid, .catalog-grid, .smart-form, .dash-grid, .step-grid, .choice-grid, .services-choice-grid, .summary-grid, .settings-grid { grid-template-columns: 1fr; }
   .wizard-step { min-height: 0; }
+  .wizard-form {
+    padding: 16px;
+    border-radius: 22px;
+  }
+  .wizard-step h3 {
+    font-size: 24px;
+    line-height: 1.22;
+  }
+  .step-count {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+  .choice-card {
+    min-height: 72px;
+    padding: 14px;
+    padding-inline-end: 42px;
+  }
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tabs button {
+    min-height: 44px;
+    padding-inline: 10px;
+    line-height: 1.18;
+  }
+  .catalog-body,
+  .service-card,
+  .faq-item,
+  .timeline-card,
+  .contact-card {
+    padding: 18px;
+  }
   .check-grid { grid-template-columns: 1fr; }
   .admin-body { overflow-x: hidden; }
   .auth-screen { padding: 14px; align-items: start; overflow-y: auto; }
