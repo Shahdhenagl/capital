@@ -656,10 +656,12 @@
     if (header && menuToggle) {
       menuToggle.addEventListener("click", () => {
         const isOpen = header.classList.toggle("is-menu-open");
+        document.body.classList.toggle("menu-open", isOpen);
         menuToggle.setAttribute("aria-expanded", String(isOpen));
       });
       header.querySelectorAll("nav a").forEach(link => link.addEventListener("click", () => {
         header.classList.remove("is-menu-open");
+        document.body.classList.remove("menu-open");
         menuToggle.setAttribute("aria-expanded", "false");
       }));
     }
