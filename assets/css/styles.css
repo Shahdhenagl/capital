@@ -1207,6 +1207,15 @@ th { color: #fff; background: rgba(255,255,255,.07); }
     height: 54vh;
     max-height: 520px;
   }
+  .inner-page main { padding-top: 0; }
+  .page-hero {
+    min-height: auto;
+    align-content: start;
+    padding: 148px clamp(18px, 5vw, 28px) 40px;
+  }
+  .standalone-advisor {
+    padding-top: 148px;
+  }
   .section { padding-block: 62px; }
   .service-grid, .catalog-grid, .smart-form, .dash-grid, .step-grid, .choice-grid, .services-choice-grid, .summary-grid, .settings-grid { grid-template-columns: 1fr; }
   .wizard-step { min-height: 0; }
@@ -1285,6 +1294,8 @@ th { color: #fff; background: rgba(255,255,255,.07); }
   .site-header { inset-inline: 8px; padding: 9px; }
   nav { padding-top: 166px; }
   .hero { padding-top: 154px; }
+  .page-hero { padding-top: 142px; padding-bottom: 34px; }
+  .standalone-advisor { padding-top: 142px; }
   .module-nav { grid-template-columns: 1fr; }
   .dash-actions { display: grid; }
   .dash-actions button { width: 100%; }
